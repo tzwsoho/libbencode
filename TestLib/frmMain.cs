@@ -135,8 +135,12 @@ namespace TestTorrent
             IBType bobj = BencodeUtil.Parse(bytes_file, cmbEncoding.Text);
             TreeNode tn = new TreeNode(lstTorrents.Text);
             ParseBObj(tn, bobj);
+
+            tvwOutput.BeginUpdate();
+            tvwOutput.Nodes.Clear();
             tvwOutput.Nodes.Add(tn);
             tvwOutput.ExpandAll();
+            tvwOutput.EndUpdate();
         }
     }
 }
