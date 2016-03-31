@@ -33,6 +33,7 @@
             this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
             this.cmbEncoding = new System.Windows.Forms.ToolStripComboBox();
             this.toolStripLabel2 = new System.Windows.Forms.ToolStripLabel();
+            this.lblInfoHash = new System.Windows.Forms.ToolStripLabel();
             this.lstTorrents = new System.Windows.Forms.ListBox();
             this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -44,18 +45,21 @@
             this.tvwOutput.Location = new System.Drawing.Point(208, 25);
             this.tvwOutput.Name = "tvwOutput";
             this.tvwOutput.ShowNodeToolTips = true;
-            this.tvwOutput.Size = new System.Drawing.Size(535, 307);
+            this.tvwOutput.Size = new System.Drawing.Size(644, 307);
             this.tvwOutput.TabIndex = 1;
             // 
             // toolStrip1
             // 
+            this.toolStrip1.CanOverflow = false;
+            this.toolStrip1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripLabel1,
             this.cmbEncoding,
-            this.toolStripLabel2});
+            this.toolStripLabel2,
+            this.lblInfoHash});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(743, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(852, 25);
             this.toolStrip1.TabIndex = 2;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -77,6 +81,13 @@
             this.toolStripLabel2.Size = new System.Drawing.Size(209, 22);
             this.toolStripLabel2.Text = "请把 torrent 文件拖到下面的列表框...";
             // 
+            // lblInfoHash
+            // 
+            this.lblInfoHash.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.lblInfoHash.Name = "lblInfoHash";
+            this.lblInfoHash.Size = new System.Drawing.Size(359, 22);
+            this.lblInfoHash.Text = "info_hash = 0000000000000000000000000000000000000000";
+            // 
             // lstTorrents
             // 
             this.lstTorrents.AllowDrop = true;
@@ -95,7 +106,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(743, 332);
+            this.ClientSize = new System.Drawing.Size(852, 332);
             this.Controls.Add(this.tvwOutput);
             this.Controls.Add(this.lstTorrents);
             this.Controls.Add(this.toolStrip1);
@@ -118,6 +129,7 @@
         private System.Windows.Forms.ToolStripComboBox cmbEncoding;
         private System.Windows.Forms.ToolStripLabel toolStripLabel2;
         private System.Windows.Forms.ListBox lstTorrents;
+        private System.Windows.Forms.ToolStripLabel lblInfoHash;
     }
 }
 

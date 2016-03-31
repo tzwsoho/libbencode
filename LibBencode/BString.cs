@@ -6,7 +6,27 @@ namespace LibBencode
     public class BString : IBType
     {
         private byte[] m_value = null;
-        public string Value
+        public byte[] Value
+        {
+            get
+            {
+                return m_value;
+            }
+
+            set
+            {
+                m_value = value;
+
+                string str_len = value.Length.ToString();
+                int value_len = m_encoding.GetByteCount(str_len) + 1;
+                byte[] bytes_value = new byte[value_len + value.Length];
+                Array.Copy(m_encoding.GetBytes(str_len + ":"), bytes_value, value_len);
+                Array.Copy(value, 0, bytes_value, value_len, value.Length);
+                m_internal_value = bytes_value;
+            }
+        }
+
+        public string StringValue
         {
             get
             {
@@ -16,7 +36,7 @@ namespace LibBencode
             set
             {
                 m_value = m_encoding.GetBytes(value);
-                m_internal_value = m_encoding.GetBytes(m_value.Length + ":" + value);
+                m_internal_value = m_encoding.GetBytes(value.Length + ":" + value);
             }
         }
 
@@ -53,15 +73,14 @@ namespace LibBencode
         {
             m_type = BType.BSTRING;
             EncodingName = encoding_name;
-            m_value = m_encoding.GetBytes(val);
-            m_internal_value = m_encoding.GetBytes(val.Length + ":" + val);
+            StringValue = val;
         }
 
         public BString(byte[] val, string encoding_name = "utf-8")
         {
             m_type = BType.BSTRING;
             EncodingName = encoding_name;
-            Value = m_encoding.GetString(val);
+            Value = val;
         }
 
         public BString(byte[] bstring)

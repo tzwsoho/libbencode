@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Text;
+using System.Security.Cryptography;
 using System.Collections.Generic;
 using System.Windows.Forms;
 using LibBencode;
@@ -9,6 +10,23 @@ namespace TestTorrent
 {
     public partial class frmMain : Form
     {
+        private string CalcInfoHash(BDict bobj)
+        {
+            string str_ret = "";
+            foreach (KeyValuePair<IBType, IBType> kv in bobj.Value)
+            {
+                if (BType.BSTRING == kv.Key.BType &&
+                    "info" == ((BString)kv.Key).StringValue)
+                {
+                    byte[] bytes_ret = new SHA1CryptoServiceProvider().ComputeHash(kv.Value.IntervalValue);
+                    str_ret = BitConverter.ToString(bytes_ret).Replace("-", "");
+                    break;
+                }
+            }
+
+            return str_ret;
+        }
+
         public frmMain()
         {
             InitializeComponent();
@@ -45,7 +63,7 @@ namespace TestTorrent
                 case BType.BSTRING:
                     {
                         BString bstring = (BString)bobj;
-                        tn.Nodes.Add("string(" + bstring.Value.Length + ") = " + bstring.Value);
+                        tn.Nodes.Add("string(" + bstring.Value.Length + ") = " + bstring.StringValue);
                     }
                     break;
 
@@ -135,6 +153,11 @@ namespace TestTorrent
             IBType bobj = BencodeUtil.Parse(bytes_file, cmbEncoding.Text);
             TreeNode tn = new TreeNode(lstTorrents.Text);
             ParseBObj(tn, bobj);
+
+            if (BType.BDICT == bobj.BType)
+            {
+                lblInfoHash.Text = "info_hash = " + CalcInfoHash((BDict)bobj);
+            }
 
             tvwOutput.BeginUpdate();
             tvwOutput.Nodes.Clear();
